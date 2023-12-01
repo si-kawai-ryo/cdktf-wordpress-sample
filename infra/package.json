@@ -1,5 +1,5 @@
 {
-  "name": "terraform",
+  "name": "infra",
   "version": "1.0.0",
   "main": "main.js",
   "types": "main.ts",
@@ -20,8 +20,7 @@
     "node": ">=18.0"
   },
   "dependencies": {
-    "@cdktf/provider-aws": "18.0.8",
-    "cdktf": "^0.19.1",
+    "cdktf": "^0.19.2",
     "constructs": "^10.3.0"
   },
   "devDependencies": {
