@@ -7,8 +7,8 @@ import { SecurityGroup } from "@cdktf/provider-aws/lib/security-group";
 import { Vpc } from "../.gen/modules/vpc";
 
 interface NetworkStackConfig {
-  region: string,
-};
+  region: string;
+}
 
 export class NetworkStack extends TerraformStack {
   constructor(scope: Construct, id: string, config: NetworkStackConfig) {
@@ -22,9 +22,7 @@ export class NetworkStack extends TerraformStack {
     /*--------------------------------*/
     new AwsProvider(this, "aws", {
       region: region,
-      defaultTags: [
-        {tags: {"ManagedBy": "CDKTF"}},
-      ],
+      defaultTags: [{ tags: { ManagedBy: "CDKTF" } }],
     });
 
     /*--------------------------------
@@ -41,7 +39,7 @@ export class NetworkStack extends TerraformStack {
 
       enableNatGateway: false,
       enableDnsSupport: true,
-    })
+    });
 
     /*--------------------------------
     /* SecurityGroup for VPC Endpoint
@@ -56,19 +54,18 @@ export class NetworkStack extends TerraformStack {
           fromPort: 443,
           toPort: 443,
           protocol: "tcp",
-          cidrBlocks: ["0.0.0.0/0"]
-        }
+          cidrBlocks: ["0.0.0.0/0"],
+        },
       ],
       egress: [
         {
           fromPort: 0,
           toPort: 0,
           protocol: "-1",
-          cidrBlocks: ["0.0.0.0/0"]
-        }
-      ]
-    })
-
+          cidrBlocks: ["0.0.0.0/0"],
+        },
+      ],
+    });
 
     /*--------------------------------
     /* VPC Endpoint
@@ -84,8 +81,8 @@ export class NetworkStack extends TerraformStack {
       privateDnsEnabled: true,
 
       tags: {
-        Name: `${vpc.vpcIdOutput}-ecrdkr-endpoint`
-      }
+        Name: `${vpc.vpcIdOutput}-ecrdkr-endpoint`,
+      },
     });
     new VpcEndpoint(this, "ecrapi", {
       vpcId: Token.asString(vpc.vpcIdOutput),
@@ -97,8 +94,8 @@ export class NetworkStack extends TerraformStack {
       privateDnsEnabled: true,
 
       tags: {
-        Name: `${vpc.vpcIdOutput}-ecrapi-endpoint`
-      }
+        Name: `${vpc.vpcIdOutput}-ecrapi-endpoint`,
+      },
     });
 
     // S3 Endpoint
@@ -107,8 +104,8 @@ export class NetworkStack extends TerraformStack {
       serviceName: `com.amazonaws.${region}.s3`,
 
       tags: {
-        Name: `${vpc.vpcIdOutput}-s3-endpoint`
-      }
+        Name: `${vpc.vpcIdOutput}-s3-endpoint`,
+      },
     });
 
     // CloudWatch Logs
@@ -122,8 +119,8 @@ export class NetworkStack extends TerraformStack {
       privateDnsEnabled: true,
 
       tags: {
-        Name: `${vpc.vpcIdOutput}-logs-endpoint`
-      }
+        Name: `${vpc.vpcIdOutput}-logs-endpoint`,
+      },
     });
 
     // ECS Exec
@@ -137,8 +134,8 @@ export class NetworkStack extends TerraformStack {
       privateDnsEnabled: true,
 
       tags: {
-        Name: `${vpc.vpcIdOutput}-ssmmessages-endpoint`
-      }
+        Name: `${vpc.vpcIdOutput}-ssmmessages-endpoint`,
+      },
     });
 
     // KMS
@@ -152,8 +149,8 @@ export class NetworkStack extends TerraformStack {
       privateDnsEnabled: true,
 
       tags: {
-        Name: `${vpc.vpcIdOutput}-kms-endpoint`
-      }
+        Name: `${vpc.vpcIdOutput}-kms-endpoint`,
+      },
     });
   }
 }
