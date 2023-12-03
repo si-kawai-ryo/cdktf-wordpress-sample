@@ -6,6 +6,12 @@
   "terraformProviders": [
     "hashicorp/aws@~>4.0"
   ],
-  "terraformModules": [],
+  "terraformModules": [
+    {
+      "name": "vpc",
+      "source": "terraform-aws-modules/vpc/aws",
+      "version": "5.2.0"
+    }
+  ],
   "context": {}
 }
